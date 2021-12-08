@@ -1,7 +1,13 @@
+def img
+
 node {
-  stage 'Building image'
-  def newApp = docker.build "bdulive/helm-charts:${env.BUILD_TAG}"
-  newApp.push() // record this snapshot (optional)
-  stage 'Approve image'
-  newApp.push 'latest'
+    stage('Build image') {
+        img = docker.build('bdulive/helm-charts')
+    }
+    stage('Publish image') {
+        docker.withRegistry('https://ghcr.io', 'github-pat') {
+            img.push("${env.BUILD_NUMBER}")
+            img.push('latest')
+        }
+    }
 }
