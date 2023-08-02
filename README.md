@@ -14,8 +14,8 @@ You can then run `helm search repo bdulive` to see the charts.
 
 To install the <chart-name> chart:
 
-`helm install my-<chart-name> bdulive/<chart-name>`
+`helm install <name> bdulive/<chart-name>`
 
 To uninstall the chart:
 
-`helm delete my-<chart-name>`
+`helm delete <name>`
