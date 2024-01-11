@@ -55,6 +55,14 @@ jobs:
           app_version: true
           level: patch
 
+      - name: Commit and Push changed Chart.yaml
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add .
+          git commit -m "Bump version"
+          git push
+
   # release:
   #   # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
   #   # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
