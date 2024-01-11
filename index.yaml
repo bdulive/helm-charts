@@ -21,4 +21,30 @@ entries:
     urls:
     - https://github.com/bdulive/helm-charts/releases/download/example-0.1.0/example-0.1.0.tgz
     version: 0.1.0
-generated: "2023-05-04T07:18:07.213990107Z"
+  openvpn:
+  - apiVersion: v1
+    appVersion: 1.1.0
+    created: "2024-01-11T05:06:36.167579726Z"
+    description: A Helm chart to install an openvpn server inside a kubernetes cluster.  Certificate
+      generation is also part of the deployment, and this chart will generate client
+      keys as needed.
+    digest: b8b58d6fc33320fcae28a83c0a94e1d0f1ad82c488bbff23f3e145a104631181
+    home: https://openvpn.net/index.php/open-source.html
+    icon: https://forums.openvpn.net/styles/openvpn/theme/images/ovpnlogo.png
+    keywords:
+    - openvpn
+    - vpn
+    - tunnel
+    - network
+    - service
+    - connectivity
+    - encryption
+    name: openvpn
+    sources:
+    - https://github.com/jfelten/openvpn-docker
+    - https://github.com/kubernetes/charts/tree/master/stable/openvpn
+    - https://github.com/jfelten/helm-charts
+    urls:
+    - https://github.com/bdulive/helm-charts/releases/download/openvpn-4.2.5/openvpn-4.2.5.tgz
+    version: 4.2.5
+generated: "2024-01-11T05:06:36.16759238Z"
