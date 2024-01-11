@@ -1,20 +1,53 @@
 name: Release Charts
-
+run-name: Running on ${{ github.ref }}
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/**'
 
 jobs:
+  changed-files:
+    name: Get changes
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          json: true
+          dir_names: true
+          dir_names_max_depth: 1
+          files: 'charts'
+
+      - name: List all changed files
+        run: echo '${{ steps.changed-files.outputs.all_changed_files }}'
+
+      - id: set-matrix
+        run: echo "matrix={\"dirs\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
+
   release:
+    needs: changed-files
+    if: fromJSON(needs.changed-files.outputs.matrix).dirs[0] != null
     # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
       contents: write
     runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+      fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -27,6 +60,6 @@ jobs:
         uses: azure/setup-helm@v3
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.5.0
+        uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
