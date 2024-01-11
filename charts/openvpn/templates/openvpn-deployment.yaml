@@ -8,7 +8,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.persistence.enabled | ternary 1 .Values.replicaCount }}
 {{- if .Values.updateStrategy }}
   strategy:
 {{ toYaml .Values.updateStrategy | indent 4 }}

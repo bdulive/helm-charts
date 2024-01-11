@@ -1,7 +1,8 @@
 # Default values for openvpn.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-replicaCount: 2
+
+replicaCount: 1
 
 updateStrategy: {}
   # type: RollingUpdate
@@ -49,9 +50,9 @@ resources:
     memory: 175Mi
 
 readinessProbe:
-  initialDelaySeconds: 5
-  periodSeconds: 5
-  successThreshold: 2
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
 
 persistence:
   enabled: true
@@ -59,18 +60,13 @@ persistence:
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
-  existingClaim: efs-openvpn-dev-pvc
+  existingClaim: ""
 
   ## openvpn data Persistent Volume Storage Class
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  ##
-  # storageClass: "-"
-  # accessMode: ReadWriteOnce
-  # size: 2G
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
 openvpn:
   # Network allocated for openvpn clients (default: 10.240.0.0).
   OVPN_NETWORK: 10.240.0.0
@@ -107,13 +103,13 @@ openvpn:
   OVPN_RCVBUF: 0
   # Override default cipher
   cipher: AES-256-CBC
-  #Adds an additional HMAC signature to all SSL/TLS handshake packets 
+  #Adds an additional HMAC signature to all SSL/TLS handshake packets
   auth: SHA512
   #Use TLS to check server identity
   remoteCertTls: true
-  #Never give up trying to connect to the server 
+  #Never give up trying to connect to the server
   resolvretry: infinite
-  #set keydirection 
+  #set keydirection
   keyDirection: 1
   #Set the appropriate level of log file verbosity
   verb: 3
