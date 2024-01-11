@@ -25,7 +25,7 @@ jobs:
         with:
           json: true
           dir_names: true
-          dir_names_max_depth: 1
+          dir_names_max_depth: 2
           files: 'charts/**'
 
       - name: List all changed files
