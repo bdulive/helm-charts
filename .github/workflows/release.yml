@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - '.github/**'
+      - ".github/**"
 
 jobs:
   changed-files:
@@ -26,7 +26,7 @@ jobs:
           json: true
           dir_names: true
           dir_names_max_depth: 2
-          files: 'charts/**'
+          files: "charts/**"
 
       - name: List all changed files
         run: echo '${{ steps.changed-files.outputs.all_changed_files }}'
@@ -34,7 +34,7 @@ jobs:
       - id: set-matrix
         run: echo "matrix={\"dirs\":${{ steps.changed-files.outputs.all_changed_files }}}" >> "$GITHUB_OUTPUT"
 
-  bump-version:
+  release:
     needs: changed-files
     if: fromJSON(needs.changed-files.outputs.matrix).dirs[0] != null
     name: Bump chart version
@@ -57,30 +57,16 @@ jobs:
           app_version: true
           level: patch
 
-      - name: Commit and Push changed Chart.yaml
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add .
-          git commit -m "Bump version"
-          git push
-
-  release:
-    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
-    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Commit and Push changed Chart.yaml
+        run: |
+          git add .
+          git commit -m "Bump version"
+          git push
 
       - name: Install Helm
         uses: azure/setup-helm@v3
