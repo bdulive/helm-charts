@@ -38,6 +38,8 @@ jobs:
     needs: changed-files
     if: fromJSON(needs.changed-files.outputs.matrix).dirs[0] != null
     name: Bump chart version
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
