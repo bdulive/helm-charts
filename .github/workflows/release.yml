@@ -43,6 +43,11 @@ jobs:
       matrix: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
       fail-fast: false
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Bump a Helm Chart Version Locally
         uses: explorium-ai/bump-helm-chart-action@main
         with:
