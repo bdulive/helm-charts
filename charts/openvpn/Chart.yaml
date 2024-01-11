@@ -18,4 +18,4 @@ sources:
 - https://github.com/jfelten/openvpn-docker
 - https://github.com/kubernetes/charts/tree/master/stable/openvpn
 - https://github.com/jfelten/helm-charts
-version: 4.2.5
+version: 4.2.6
