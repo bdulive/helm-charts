@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   example:
   - apiVersion: v2
+    appVersion: 0.1.6
+    created: "2025-02-27T12:58:12.262794215Z"
+    description: A Helm chart for Kubernetes
+    digest: e0db83af1842465dd1d257bec91cf20a4ffc2e11b158c350f4dd270caa532053
+    name: example
+    type: application
+    urls:
+    - https://github.com/bdulive/helm-charts/releases/download/example-0.1.6/example-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
     appVersion: 0.1.4
     created: "2024-01-11T09:14:57.55504862Z"
     description: A Helm chart for Kubernetes
@@ -102,4 +112,4 @@ entries:
     urls:
     - https://github.com/bdulive/helm-charts/releases/download/openvpn-4.2.5/openvpn-4.2.5.tgz
     version: 4.2.5
-generated: "2024-01-11T09:14:57.555073616Z"
+generated: "2025-02-27T12:58:12.262822648Z"
